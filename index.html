@@ -18,6 +18,10 @@
           height: 100%;
           width: 100%;
       }
+      .typing {
+          border: none;
+          display: flex;
+      }
     </style>
   </head>
   <div id="popup" class="popup">
@@ -28,8 +32,9 @@
   </div> 
   <body>
     <ul id="messages"></ul>
+    <div id="typing" class="typing"></div>
     <form id="form" action="">
-      <input id="input" autocomplete="off" /><button>Send</button>
+      <input id="input" autocomplete="off" onchange="" /><button>Send</button>
     </form>
     <script src="/socket.io/socket.io.js"></script>
     <script>
@@ -38,11 +43,18 @@
         var nickForm = document.getElementById('nicknameform');
         var nickinput = document.getElementById('nickinput')
         var input = document.getElementById('input');
+        var typing = document.getElementById('typing');
+
+        input.addEventListener('change', function(e) {
+            e.preventDefault();
+            socket.emit('typing', input.value);
+        })
       
         form.addEventListener('submit', function(e) {
           e.preventDefault();
           if (input.value) {
-            socket.emit('chat message', input.value, window.nick);
+            socket.emit('chat message', input.value);
+            socket.emit('typing', '');
             input.value = '';
           }
         });
@@ -71,7 +83,32 @@
             window.scrollTo(0, document.body.scrollHeight);   
         });
 
-        socket.on('chat message', function(msg, nick) {
+        socket.on('typing', (writers) => {
+            var nickPos = writers.indexOf(window.nick);
+            if (nickPos != -1) {
+                writers.splice(nickPos, 1);
+            }
+            if (writers.length > 0) {
+                let text = '';
+                if (writers.length <= 3) {
+                    writers.forEach(writer => {
+                        text = text + ' ' + writer;
+                    });
+                } else {
+                    text = 'Various users'
+                };
+                if (writers.length == 1) {
+                    text = text + ' is typing';
+                } else {
+                    text = text + ' are typing';
+                }
+                typing.textContent = text;
+            } else {
+                typing.textContent = '';
+            }
+        });
+
+        socket.on('chat message', (msg, nick) => {
             var item = document.createElement('li');
             item.textContent = nick + ': ' + msg;
             messages.appendChild(item);

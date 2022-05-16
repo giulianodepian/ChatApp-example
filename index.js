@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const http = require('http');
+const { SocketAddress } = require('net');
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
@@ -10,6 +11,7 @@ app.get('/', (req, res) => {
 });
 
 var sockets = [];
+var writers = [];
 
 io.on('connection', (socket) => {
     const id = socket.id;
@@ -20,8 +22,19 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         io.emit('user disconnected', sockets[id]);
     });
-    socket.on('chat message', (msg, nick) => {
-        io.emit('chat message', msg, nick)
+    socket.on('typing', (input) => {
+        if (input && writers.indexOf(sockets[id]) == -1) {
+            writers.push(sockets[id])
+            socket.broadcast.emit('typing', writers);
+        } 
+        if (!input) {
+            const pos = writers.indexOf(sockets[id]);
+            writers.splice(pos, 1);
+            socket.broadcast.emit('typing', writers);
+        }
+    });
+    socket.on('chat message', (msg) => {
+        io.emit('chat message', msg, sockets[id])
     });
 });
 
