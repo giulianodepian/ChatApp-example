@@ -1,6 +1,37 @@
 {
+  "name": "chat",
+  "version": "0.0.1",
+  "description": "Realtime chat app made with Socket.IO",
+  "main": "index.js",
   "dependencies": {
     "express": "^4.18.1",
     "socket.io": "^4.5.0"
-  }
+  },
+  "devDependencies": {
+    "@tsconfig/node17": "^1.0.0",
+    "@types/express": "^4.17.13",
+    "@types/node": "^17.0.34",
+    "@types/socket.io": "^3.0.2",
+    "@typescript-eslint/eslint-plugin": "^5.25.0",
+    "@typescript-eslint/parser": "^5.25.0",
+    "eslint": "^8.15.0",
+    "nodemon": "^2.0.16",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.4"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npx nodemon src/index.ts",
+    "lint": "eslint . --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/giulianodepian/ChatApp-example.git"
+  },
+  "author": "Giuliano de Pian",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/giulianodepian/ChatApp-example/issues"
+  },
+  "homepage": "https://github.com/giulianodepian/ChatApp-example#readme"
 }
