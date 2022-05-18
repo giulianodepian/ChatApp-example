@@ -1,6 +1,5 @@
 import express from 'express';
 import { createServer } from 'http';
-import chalkAnimation from 'chalk-animation';
 import { Server } from 'socket.io';
 
 const app = express();
@@ -39,5 +38,5 @@ io.on('connection', (socket) => {
 });
 
 server.listen(3000, () => {
-    chalkAnimation.rainbow('Listening on http://localhost:3000');
+    console.log('🚀 Listening on http://localhost:3000');
 });
