@@ -2,7 +2,7 @@
   "name": "chat",
   "version": "0.0.1",
   "description": "Realtime chat app made with Socket.IO",
-  "main": "index.js",
+  "main": "src/index.ts",
   "dependencies": {
     "express": "^4.18.1",
     "socket.io": "^4.5.0"
@@ -14,6 +14,7 @@
     "@types/socket.io": "^3.0.2",
     "@typescript-eslint/eslint-plugin": "^5.25.0",
     "@typescript-eslint/parser": "^5.25.0",
+    "chalk-animation": "^1.6.0",
     "eslint": "^8.15.0",
     "nodemon": "^2.0.16",
     "ts-node": "^10.7.0",
@@ -21,7 +22,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx nodemon src/index.ts",
+    "start": "npx nodemon src/index.ts -e html,css,js",
     "lint": "eslint . --fix"
   },
   "repository": {
