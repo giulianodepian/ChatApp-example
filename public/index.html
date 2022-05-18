@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <title>Socket.IO chat</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <div id="popup" class="popup">
+    <form id="nicknameform" action="">
+        <input id="nickinput" autocomplete="off">Nickname</input>
+        <button>Accept</button>
+    </form>
+  </div> 
+  <body>
+    <ul id="messages"></ul>
+    <div id="typing" class="typing"></div>
+    <form id="form" action="">
+      <input id="input" autocomplete="off" onchange="" /><button>Send</button>
+    </form>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="index.js"></script>
+  </body>
+</html>
