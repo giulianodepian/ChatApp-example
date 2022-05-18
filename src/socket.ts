@@ -5,11 +5,11 @@ const writers = [];
 
 const onConnected = (io: Server, id: string, nick: string) => {
     sockets[id] = nick;
-    io.emit('user connected', nick);
+    io.emit('userConnected', nick);
 }
 
 const onDisconnected = (io: Server, id: string) => {
-    io.emit('user disconnected', sockets[id]);
+    io.emit('userDisconnected', sockets[id]);
 }
 
 const onTyping = (socket: Socket, id: string, input: string) => {
@@ -25,17 +25,17 @@ const onTyping = (socket: Socket, id: string, input: string) => {
 }
 
 const onMessage = (io: Server, id: string, msg: string) => {
-    io.emit('chat message', msg, sockets[id])
+    io.emit('chatMessage', msg, sockets[id])
 }
 
 export const onConnection = (io: Server) => {
     io.on('connection', (socket) => {
         const id = socket.id;
 
-        socket.on('user connected', (nick: string) => onConnected(io, id, nick))
+        socket.on('userConnected', (nick: string) => onConnected(io, id, nick))
         socket.on('disconnect', () => onDisconnected(io, id));
         socket.on('typing', (input) => onTyping(socket, id, input));
-        socket.on('chat message', (msg) => onMessage(io, id, msg));
+        socket.on('chatMessage', (msg) => onMessage(io, id, msg));
     });
 
 }

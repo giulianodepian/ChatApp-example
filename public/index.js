@@ -13,7 +13,7 @@ input.addEventListener('change', function (e) {
 form.addEventListener('submit', function (e) {
     e.preventDefault();
     if (input.value) {
-        socket.emit('chat message', input.value);
+        socket.emit('chatMessage', input.value);
         socket.emit('typing', '');
         input.value = '';
     }
@@ -21,7 +21,7 @@ form.addEventListener('submit', function (e) {
 nickForm.addEventListener('submit', function (e) {
     e.preventDefault();
     if (nickinput.value) {
-        socket.emit('user connected', nickinput.value);
+        socket.emit('userConnected', nickinput.value);
         window.nick = nickinput.value;
         document.getElementById('popup').style.visibility = 'hidden';
         document.getElementById('form').style.visibility = 'visible';
@@ -29,14 +29,14 @@ nickForm.addEventListener('submit', function (e) {
     }
 })
 
-socket.on('user connected', (nick) => {
+socket.on('userConnected', (nick) => {
     var item = document.createElement('li');
     item.textContent = nick + ' Connected';
     messages.appendChild(item);
     window.scrollTo(0, document.body.scrollHeight);
 });
 
-socket.on('user disconnected', (nick) => {
+socket.on('userDisconnected', (nick) => {
     var item = document.createElement('li');
     item.textContent = nick + ' Disconnected';
     messages.appendChild(item);
@@ -68,7 +68,7 @@ socket.on('typing', (writers) => {
     }
 });
 
-socket.on('chat message', (msg, nick) => {
+socket.on('chatMessage', (msg, nick) => {
     var item = document.createElement('li');
     item.textContent = nick + ': ' + msg;
     messages.appendChild(item);
