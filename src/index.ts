@@ -1,10 +1,11 @@
-import * as express from 'express';
-import * as http from 'http';
+import express from 'express';
+import { createServer } from 'http';
+import chalkAnimation from 'chalk-animation';
 import { Server } from 'socket.io';
 
 const app = express();
 
-const server = http.createServer(app);
+const server = createServer(app);
 const io = new Server(server);
 
 app.use(express.static('public'))
@@ -25,7 +26,7 @@ io.on('connection', (socket) => {
         if (input && writers.indexOf(sockets[id]) == -1) {
             writers.push(sockets[id])
             socket.broadcast.emit('typing', writers);
-        } 
+        }
         if (!input) {
             const pos = writers.indexOf(sockets[id]);
             writers.splice(pos, 1);
@@ -38,5 +39,5 @@ io.on('connection', (socket) => {
 });
 
 server.listen(3000, () => {
-  console.log('listening on *:3000');
+    chalkAnimation.rainbow('Listening on http://localhost:3000');
 });
