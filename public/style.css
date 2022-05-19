@@ -47,7 +47,11 @@
     list-style-type: none;
     margin: 0;
     padding: 0;
-    overflow: scroll;
+}
+
+.messages {
+    overflow-y: scroll;
+    height: 51rem;
 }
 
 .chat #messages>li {
@@ -87,6 +91,6 @@
     width: 10rem;
     height: 51rem;
     display: inline-block;
-    overflow: scroll;
+    overflow-y: auto;
     border-right: 6px solid black;
 }

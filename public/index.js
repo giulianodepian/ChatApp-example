@@ -5,6 +5,7 @@ var nickinput = document.getElementById('nickinput')
 var input = document.getElementById('input');
 var typing = document.getElementById('typing');
 var userList = document.getElementById('users')
+var messagesDiv = document.getElementById("msg-div");
 
 input.addEventListener('change', function (e) {
     e.preventDefault();
@@ -34,7 +35,7 @@ socket.on('userConnected', (nick, sockets) => {
     var item = document.createElement('li');
     item.textContent = nick + ' Connected';
     messages.appendChild(item);
-    window.scrollTo(0, document.body.scrollHeight);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
     document.getElementById('users').innerHTML = '';
     for (key in sockets) {
         var user = document.createElement('li');
@@ -47,7 +48,8 @@ socket.on('userDisconnected', (nick, sockets) => {
     var item = document.createElement('li');
     item.textContent = nick + ' Disconnected';
     messages.appendChild(item);
-    window.scrollTo(0, document.body.scrollHeight);
+    console.log()
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
     document.getElementById('users').innerHTML = '';
     for (key in sockets) {
         var user = document.createElement('li');
@@ -85,5 +87,5 @@ socket.on('chatMessage', (msg, nick) => {
     var item = document.createElement('li');
     item.textContent = nick + ': ' + msg;
     messages.appendChild(item);
-    window.scrollTo(0, document.body.scrollHeight);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
 });
