@@ -1,6 +1,6 @@
 export interface ServerToClientEvents {
-    userConnected: (nick: string) => void;
-    userDisconnected: (nick: string) => void;
+    userConnected: (nick: string, sockets: Object) => void;
+    userDisconnected: (nick: string, sockets: Object) => void;
     typing: (writers: Array<string>) => void;
     chatMessage: (msg: string, nick: string) => void;
 }

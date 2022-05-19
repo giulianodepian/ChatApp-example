@@ -1,15 +1,17 @@
 import { Server, Socket } from "socket.io";
 
-const sockets = [];
+const sockets = {};
 const writers = [];
 
 const onConnected = (io: Server, id: string, nick: string) => {
     sockets[id] = nick;
-    io.emit('userConnected', nick);
+    io.emit('userConnected', nick, sockets);
 }
 
 const onDisconnected = (io: Server, id: string) => {
-    io.emit('userDisconnected', sockets[id]);
+    var nick = sockets[id];
+    delete sockets[id];
+    io.emit('userDisconnected', nick, sockets);
 }
 
 const onTyping = (socket: Socket, id: string, input: string) => {

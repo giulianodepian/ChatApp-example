@@ -10,11 +10,15 @@
   </head>
   <div id="popup" class="popup">
     <form id="nicknameform" action="">
-        <input id="nickinput" autocomplete="off">Nickname</input>
+        Nickname
+        <input id="nickinput" autocomplete="off"></input>
         <button>Accept</button>
     </form>
-  </div> 
-  <body>
+  </div>
+  <div class="user-list">
+    <ul id="users"></ul>
+  </div>
+  <div class="chat">
     <ul id="messages"></ul>
     <div id="typing" class="typing"></div>
     <form id="form" action="">
@@ -22,5 +26,5 @@
     </form>
     <script src="/socket.io/socket.io.js"></script>
     <script src="index.js"></script>
-  </body>
+  </div>
 </html>

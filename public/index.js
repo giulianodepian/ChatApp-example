@@ -4,6 +4,7 @@ var nickForm = document.getElementById('nicknameform');
 var nickinput = document.getElementById('nickinput')
 var input = document.getElementById('input');
 var typing = document.getElementById('typing');
+var userList = document.getElementById('users')
 
 input.addEventListener('change', function (e) {
     e.preventDefault();
@@ -29,18 +30,30 @@ nickForm.addEventListener('submit', function (e) {
     }
 })
 
-socket.on('userConnected', (nick) => {
+socket.on('userConnected', (nick, sockets) => {
     var item = document.createElement('li');
     item.textContent = nick + ' Connected';
     messages.appendChild(item);
     window.scrollTo(0, document.body.scrollHeight);
+    document.getElementById('users').innerHTML = '';
+    for (key in sockets) {
+        var user = document.createElement('li');
+        user.textContent = sockets[key];
+        userList.appendChild(user);
+    }
 });
 
-socket.on('userDisconnected', (nick) => {
+socket.on('userDisconnected', (nick, sockets) => {
     var item = document.createElement('li');
     item.textContent = nick + ' Disconnected';
     messages.appendChild(item);
     window.scrollTo(0, document.body.scrollHeight);
+    document.getElementById('users').innerHTML = '';
+    for (key in sockets) {
+        var user = document.createElement('li');
+        user.textContent = sockets[key];
+        userList.appendChild(user);
+    }
 });
 
 socket.on('typing', (writers) => {
