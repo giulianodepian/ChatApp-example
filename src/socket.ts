@@ -26,8 +26,8 @@ const onTyping = (socket: Socket, id: string, input: string) => {
     }
 }
 
-const onMessage = (io: Server, id: string, msg: string) => {
-    io.emit('chatMessage', msg, sockets[id])
+const onMessage = (socket: Socket, id: string, msg: string) => {
+    socket.broadcast.emit('chatMessage', msg, sockets[id])
 }
 
 export const onConnection = (io: Server) => {
@@ -37,7 +37,7 @@ export const onConnection = (io: Server) => {
         socket.on('userConnected', (nick: string) => onConnected(io, id, nick))
         socket.on('disconnect', () => onDisconnected(io, id));
         socket.on('typing', (input) => onTyping(socket, id, input));
-        socket.on('chatMessage', (msg) => onMessage(io, id, msg));
+        socket.on('chatMessage', (msg) => onMessage(socket, id, msg));
     });
 
 }

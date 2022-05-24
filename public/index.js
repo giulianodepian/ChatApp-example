@@ -7,6 +7,13 @@ var typing = document.getElementById('typing');
 var userList = document.getElementById('users')
 var messagesDiv = document.getElementById("msg-div");
 
+function appendMessage(nick, msg) {
+    var item = document.createElement('li');
+    item.textContent = nick + ': ' + msg;
+    messages.appendChild(item);
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+}
+
 input.addEventListener('change', function (e) {
     e.preventDefault();
     socket.emit('typing', input.value);
@@ -15,6 +22,7 @@ input.addEventListener('change', function (e) {
 form.addEventListener('submit', function (e) {
     e.preventDefault();
     if (input.value) {
+        appendMessage(window.nick ,input.value);
         socket.emit('chatMessage', input.value);
         socket.emit('typing', '');
         input.value = '';
@@ -84,8 +92,5 @@ socket.on('typing', (writers) => {
 });
 
 socket.on('chatMessage', (msg, nick) => {
-    var item = document.createElement('li');
-    item.textContent = nick + ': ' + msg;
-    messages.appendChild(item);
-    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    appendMessage(nick, msg);
 });
